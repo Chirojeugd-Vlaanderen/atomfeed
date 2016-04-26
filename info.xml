@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<extension key="be.chiro.civi.atomfeeds" type="module">
+  <file>atomfeeds</file>
+  <name>Atom Feeds</name>
+  <description>Provides dashlets that display atom feeds</description>
+  <license>AGPL-3.0</license>
+  <maintainer>
+    <author>Johan Vervloet</author>
+    <email>helpdesk@chiro.be</email>
+  </maintainer>
+  <urls>
+    <url desc="Main Extension Page">https://github.com/Chirojeugd-Vlaanderen/atomfeeds</url>
+    <url desc="Documentation">https://github.com/Chirojeugd-Vlaanderen/eventsearch</url>
+    <url desc="Support">https://github.com/Chirojeugd-Vlaanderen/eventsearchE</url>
+    <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
+  </urls>
+  <releaseDate>2016-04-26</releaseDate>
+  <version>0.1-alpha1</version>
+  <compatibility>
+    <ver>4.6</ver>
+  </compatibility>
+  <comments>
+      This CiviCRM extension provides dashlets like the CiviCRM News dashlet,
+      but it should work with atom feeds as well.
+  </comments>
+  <civix>
+    <namespace>CRM/Atomfeeds</namespace>
+  </civix>
+</extension>
