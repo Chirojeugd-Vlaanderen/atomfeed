@@ -137,7 +137,7 @@ class CRM_Atomfeeds_Page_Feed extends CRM_Core_Page {
           unset($item['content']);
         }
         $description = preg_replace('#<h[1-3][^>]*>(.+?)</h[1-3][^>]*>#s', '<h4>$1</h4>', $description);
-        CRM_Utils_Hook::singleton()->invoke(1, $description, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, 'atomfeed_alter_content');
+        CRM_Utils_Hook::singleton()->invoke(1, $description, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, 'atomfeeds_alter_content');
         $item['description'] = strip_tags($description, "<a><p><h4><h5><h6><b><i><em><strong><ol><ul><li><dd><dt><code><pre><br/>");
         if (!is_string($item['link'])) {
           $link = $item['link']['href']->__toString();
