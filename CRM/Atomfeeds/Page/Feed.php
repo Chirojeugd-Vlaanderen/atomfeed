@@ -31,7 +31,7 @@ require_once 'CRM/Core/Page.php';
 
 /**
  * Page for atom feed dashlet.
- * 
+ *
  * This started as a copy of CRM/Dashlet/Page/Blog.php.
  */
 class CRM_Atomfeeds_Page_Feed extends CRM_Core_Page {
@@ -45,13 +45,13 @@ class CRM_Atomfeeds_Page_Feed extends CRM_Core_Page {
    * @return FALSE|string
    */
   public function getBlogUrl() {
-    $urls = CRM_Core_BAO_Setting::getItem('atomfeed', 'feed_urls');
-    
+    $urls = CRM_Core_BAO_Setting::getItem('atomfeeds', 'feed_urls');
+
     // For the moment, we only look at the first URL.
     $url = CRM_Utils_Array::first($urls);
-    
+
     return CRM_Utils_System::evalUrl($url);
-  }  
+  }
 
   public function run() {
     // Example: Set the page-title dynamically; alternatively, declare a static title in xml/Menu/*.xml
@@ -113,7 +113,7 @@ class CRM_Atomfeeds_Page_Feed extends CRM_Core_Page {
     $feed = @simplexml_load_string($rawFeed);
 
     $blog = array();
-    
+
     $items = NULL;
     if (!empty($feed->channel->item)) {
       // RSS
@@ -137,6 +137,7 @@ class CRM_Atomfeeds_Page_Feed extends CRM_Core_Page {
           unset($item['content']);
         }
         $description = preg_replace('#<h[1-3][^>]*>(.+?)</h[1-3][^>]*>#s', '<h4>$1</h4>', $description);
+        CRM_Utils_Hook::singleton()->invoke(1, $description, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, 'atomfeed_alter_content');
         $item['description'] = strip_tags($description, "<a><p><h4><h5><h6><b><i><em><strong><ol><ul><li><dd><dt><code><pre><br/>");
         if (!is_string($item['link'])) {
           $link = $item['link']['href']->__toString();
@@ -150,13 +151,13 @@ class CRM_Atomfeeds_Page_Feed extends CRM_Core_Page {
       }
     }
     return $blog;
-  }  
-  
+  }
+
   /**
    * Use the same template as the native CiviCRM Blog dashlet.
    * @return string
    */
   public function getTemplateFileName() {
     return "CRM/Dashlet/Page/Blog.tpl";
-  }  
+  }
 }
