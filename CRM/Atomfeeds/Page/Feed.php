@@ -140,9 +140,11 @@ class CRM_Atomfeeds_Page_Feed extends CRM_Core_Page {
         CRM_Utils_Hook::singleton()->invoke(1, $description, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, 'atomfeeds_alter_content');
         $item['description'] = strip_tags($description, "<a><p><h4><h5><h6><b><i><em><strong><ol><ul><li><dd><dt><code><pre><br/>");
         if (!is_string($item['link'])) {
+          // atom things
           $link = $item['link']['href']->__toString();
           $item['link'] = $link;
-          $item['author'] = $item['author']->Name->__toString();
+          $item['author'] = $item['author']->name->__toString();
+          $item['date'] = date('d/m/Y', strtotime($item['updated']));
         }
         $blog[] = $item;
       }
@@ -151,13 +153,5 @@ class CRM_Atomfeeds_Page_Feed extends CRM_Core_Page {
       }
     }
     return $blog;
-  }
-
-  /**
-   * Use the same template as the native CiviCRM Blog dashlet.
-   * @return string
-   */
-  public function getTemplateFileName() {
-    return "CRM/Dashlet/Page/Blog.tpl";
   }
 }
