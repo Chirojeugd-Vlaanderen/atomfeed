@@ -53,7 +53,7 @@ function atomfeeds_civicrm_enable() {
  * Implements hook_civicrm_container().
  */
 function atomfeeds_civicrm_container(\Symfony\Component\DependencyInjection\ContainerBuilder $container) {
-  $container->setDefinition("cache.dashboard", new Symfony\Component\DependencyInjection\Definition(
+  $container->setDefinition("cache.atomfeeds", new Symfony\Component\DependencyInjection\Definition(
     'CRM_Utils_Cache_Interface',
     [
       [

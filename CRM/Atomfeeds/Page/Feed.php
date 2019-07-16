@@ -78,7 +78,7 @@ class CRM_Atomfeeds_Page_Feed extends CRM_Core_Page {
     // Fetch data from cache
     // TODO: Once we support multiple feeds, we need to store the feed
     // ID or something like that in the cache.
-    $blogData = Civi::cache('dashboard')->get('feed');
+    $blogData = Civi::cache('atomfeeds')->get('feed');
     if (!empty($blogData))) {
       return $blogData;
     }
@@ -138,7 +138,8 @@ class CRM_Atomfeeds_Page_Feed extends CRM_Core_Page {
         $blog[] = $item;
       }
       if ($blog) {
-        Civi::cache('dashboard')->set('blog', $blog, 86400);
+        // Set TTL to be 24 Hours (86400s) Times by the number of Cache days.
+        Civi::cache('atomfeeds')->set('blog', $blog, 86400 * SELF::CACHE_DAYS);
       }
     }
     return $blog;
