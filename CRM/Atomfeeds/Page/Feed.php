@@ -78,20 +78,9 @@ class CRM_Atomfeeds_Page_Feed extends CRM_Core_Page {
     // Fetch data from cache
     // TODO: Once we support multiple feeds, we need to store the feed
     // ID or something like that in the cache.
-    $cache = CRM_Core_DAO::executeQuery("SELECT data, created_date FROM civicrm_cache
-      WHERE group_name = 'dashboard' AND path = 'feed'");
-    if ($cache->fetch()) {
-      $expire = time() - (60 * 60 * 24 * self::CACHE_DAYS);
-      // Refresh data after CACHE_DAYS
-      if (strtotime($cache->created_date) < $expire) {
-        $new_data = $this->_getFeed($this->getBlogUrl());
-        // If fetching the new feed was successful, return it
-        // Otherwise use the old cached data - it's better than nothing
-        if ($new_data) {
-          return $new_data;
-        }
-      }
-      return unserialize($cache->data);
+    $blogData = Civi::cache('atomfeeds')->get('feed');
+    if (!empty($blogData))) {
+      return $blogData;
     }
     return $this->_getFeed($this->getBlogUrl());
   }
@@ -149,7 +138,8 @@ class CRM_Atomfeeds_Page_Feed extends CRM_Core_Page {
         $blog[] = $item;
       }
       if ($blog) {
-        CRM_Core_BAO_Cache::setItem($blog, 'dashboard', 'blog');
+        // Set TTL to be 24 Hours (86400s) Times by the number of Cache days.
+        Civi::cache('atomfeeds')->set('blog', $blog, 86400 * SELF::CACHE_DAYS);
       }
     }
     return $blog;

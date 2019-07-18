@@ -50,6 +50,23 @@ function atomfeeds_civicrm_enable() {
 }
 
 /**
+ * Implements hook_civicrm_container().
+ */
+function atomfeeds_civicrm_container(\Symfony\Component\DependencyInjection\ContainerBuilder $container) {
+  $container->setDefinition("cache.atomfeeds", new Symfony\Component\DependencyInjection\Definition(
+    'CRM_Utils_Cache_Interface',
+    [
+      [
+        'name' => 'dashboard',
+        'type' => ['*memory*', 'SqlGroup', 'ArrayCache'],
+        'withArray' => 'fast',
+      ],
+    ]
+  ))->setFactory('CRM_Utils_Cache::create');
+}
+
+
+/**
  * Implements hook_civicrm_disable().
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_disable
