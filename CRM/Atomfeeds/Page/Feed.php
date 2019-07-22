@@ -79,7 +79,7 @@ class CRM_Atomfeeds_Page_Feed extends CRM_Core_Page {
     // TODO: Once we support multiple feeds, we need to store the feed
     // ID or something like that in the cache.
     $blogData = Civi::cache('atomfeeds')->get('feed');
-    if (!empty($blogData))) {
+    if (!empty($blogData)) {
       return $blogData;
     }
     return $this->_getFeed($this->getBlogUrl());
